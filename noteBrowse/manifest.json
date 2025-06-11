@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Notebrowse",
+  "version": "0.1",
+  "description": "Simple in-browser note-taking extension",
+  "author": "Bit38",
+  "homepage_url": "https://github.com/Bit38/browser_extensions",
+
+  "permissions": ["sidePanel"],
+
+  "side_panel": {
+    "default_title": "Notebrowse",
+    "default_path": "sidebar/sidebar.html",
+    "open_at_install": true
+  },
+
+  "icons": {
+    "128": "icons/128icon.png",
+    "64": "icons/64icon.png",
+    "32": "icons/32icon.png",
+    "16": "icons/16icon.png"
+  }
+}

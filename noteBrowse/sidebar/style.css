@@ -1,0 +1,137 @@
+:root {
+  --cl-bg: #000e14;
+  --cl-tx: #ced9dd;
+
+  --cl-bg-tr: rgba(0, 14, 20, 0);
+
+  --cl-tx-dk: #698a96;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--cl-bg);
+  color: var(--cl-tx);
+
+  padding: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.note-list {
+  flex: 1;
+  border: 2px solid var(--cl-tx);
+  border-radius: 1rem;
+
+  padding: 1rem;
+}
+
+.note-list::before {
+  content: "Saved notes";
+  font-size: 1.4rem;
+  font-family: sans-serif roboto;
+  font-weight: bolder;
+
+  list-style: none;
+
+  background: var(--cl-bg);
+  background: linear-gradient(
+    90deg,
+    var(--cl-bg-tr) 0,
+    var(--cl-bg) 10%,
+    var(--cl-bg) 90%,
+    var(--cl-bg-tr) 100%
+  );
+  padding: 0 1em;
+
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.note-list li {
+  display: flex;
+  flex-direction: column;
+
+  cursor: pointer;
+  border-bottom: 0.01rem solid var(--cl-tx);
+}
+
+.note-list li span {
+  position: relative;
+}
+
+.note-list li span::after {
+  content: "";
+
+  position: absolute;
+
+  width: 0;
+  height: 0.01rem;
+
+  box-shadow: 0 0 1em 0.01em var(--cl-tx);
+
+  transition: width 0.3s ease-out, box-shadow 0.1s;
+}
+
+.note-list li:hover span::after {
+  width: 100%;
+  box-shadow: 0 0 1em 0.1em var(--cl-tx);
+}
+
+.note-list li h2 {
+  flex: 1;
+
+  margin: 0.5em 0 0 0;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.note-list li h4 {
+  margin: 0 0 0.5em 0;
+  color: var(--cl-tx-dk);
+}
+
+button {
+  width: 100%;
+  border: 2px solid var(--cl-tx);
+  border-radius: 1rem;
+
+  background: var(--cl-bg);
+  color: var(--cl-tx);
+
+  font-family: sans-serif roboto;
+  font-weight: bolder;
+
+  transition: box-shadow 0.3s ease-in-out;
+  font-size: 1.2rem;
+}
+
+button:hover {
+  box-shadow: 0 0 0.5em 0.1rem var(--cl-tx);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --cl-tx: #000e14;
+    --cl-bg: #ced9dd;
+
+    --cl-bg-tr: rgba(206, 217, 221, 0);
+
+    --cl-tx-dk: #698a96;
+  }
+}
