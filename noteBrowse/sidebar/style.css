@@ -3,6 +3,7 @@
   --cl-tx: #ced9dd;
 
   --cl-bg-tr: rgba(0, 14, 20, 0);
+  --cl-bg-ta: #001e2b;
 
   --cl-tx-dk: #698a96;
 }
@@ -16,17 +17,37 @@
 html,
 body {
   height: 100%;
-}
 
-body {
   background: var(--cl-bg);
   color: var(--cl-tx);
+}
+
+.panel1 {
+  height: 100%;
 
   padding: 1rem;
 
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.panel2 {
+  display: none;
+
+  height: 100%;
+}
+
+.panel2.show {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  padding: 1rem;
+}
+
+.panel1:has(+ .panel2.show) {
+  display: none;
 }
 
 .note-list {
@@ -119,10 +140,36 @@ button {
 
   transition: box-shadow 0.3s ease-in-out;
   font-size: 1.2rem;
+
+  padding: 0.2rem;
 }
 
 button:hover {
   box-shadow: 0 0 0.5em 0.1rem var(--cl-tx);
+}
+
+textarea,
+input[type="text"] {
+  background: var(--cl-bg-ta);
+  color: var(--cl-tx);
+  font-size: 1.1em;
+
+  border: 2px solid var(--cl-tx);
+  border-radius: 1rem;
+
+  outline: none;
+
+  padding: 1rem;
+}
+
+textarea {
+  flex: 1;
+}
+
+.button-cage {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
 }
 
 @media (prefers-color-scheme: light) {
@@ -131,6 +178,7 @@ button:hover {
     --cl-bg: #ced9dd;
 
     --cl-bg-tr: rgba(206, 217, 221, 0);
+    --cl-bg-ta: #819aa3;
 
     --cl-tx-dk: #698a96;
   }
