@@ -57,6 +57,20 @@ class DBIndexed {
     });
   }
 
+  getNoteById(id) {
+    const os = this.#db.transaction(["notes"], "readonly").objectStore("notes");
+
+    return new Promise((resolve, reject) => {
+      const dbReq = os.get(IDBKeyRange.only(id));
+      dbReq.onsuccess = (ev) => {
+        resolve(dbReq.result);
+      };
+      dbReq.onerror = (ev) => {
+        reject(ev.error);
+      };
+    });
+  }
+
   addNote(title, content) {
     const os = this.#db
       .transaction(["notes"], "readwrite")
@@ -67,6 +81,47 @@ class DBIndexed {
       content: content,
       created: new Date(),
     });
+
+    return new Promise((resolve, reject) => {
+      dbReq.onsuccess = () => {
+        resolve();
+      };
+
+      dbReq.onerror = (ev) => {
+        reject(ev.error);
+      };
+    });
+  }
+
+  updateNote(id, title, content) {
+    const os = this.#db
+      .transaction(["notes"], "readwrite")
+      .objectStore("notes");
+
+    const dbReq = os.put({
+      id: id,
+      title: title,
+      content: content,
+      created: new Date(),
+    });
+
+    return new Promise((resolve, reject) => {
+      dbReq.onsuccess = () => {
+        resolve();
+      };
+
+      dbReq.onerror = (ev) => {
+        reject(ev.error);
+      };
+    });
+  }
+
+  deleteNote(id) {
+    const os = this.#db
+      .transaction(["notes"], "readwrite")
+      .objectStore("notes");
+
+    const dbReq = os.delete(id);
 
     return new Promise((resolve, reject) => {
       dbReq.onsuccess = () => {

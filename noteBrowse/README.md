@@ -5,7 +5,7 @@ Simple browser extension allowing you to create and store notes in your browser.
 > This extension is still in development!
 
 ## Features/Roadmap
-- [] Create a working version for chrome
+- [x] Create a working version for chrome
 - [] Make it available on [Chrome Web Store](https://chromewebstore.google.com/)
 - [] Folders and/or tags
 - [] Firefox version 

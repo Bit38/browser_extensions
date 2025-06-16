@@ -9,7 +9,7 @@ const note_list = document.querySelector(".note-list");
 const panel2 = document.querySelector(".panel2");
 
 const db = await loadDB();
-window.ddb = db;
+let currentId = null;
 
 window.addEventListener("beforeunload", () => {
   db.close();
@@ -18,23 +18,32 @@ window.addEventListener("beforeunload", () => {
 button_new.onclick = () => {
   input_title.value = "";
   input_content.value = "";
+  button_delete.innerText = "Cancel";
+  button_save.innerText = "Create note";
 
   panel2.classList.add("show");
 };
 
-button_delete.onclick = () => {
-  // TODO: recognise which note is going to be deleted
-  console.log("deleted or discarded note");
+button_delete.onclick = async () => {
+  if (currentId !== null) {
+    await db.deleteNote(currentId);
+    currentId = null;
+    await reload_note_list();
+  }
 
   panel2.classList.remove("show");
 };
 
-button_save.onclick = () => {
-  // TODO: recognise if note is going to be created or updated
+button_save.onclick = async () => {
   const title = input_title.value;
   const content = input_content.value;
-  console.log(`Created or updated note ("${title}", "${content}")`);
 
+  if (currentId !== null) {
+    await db.updateNote(currentId, title, content);
+    currentId = null;
+  } else await db.addNote(title, content);
+
+  await reload_note_list();
   panel2.classList.remove("show");
 };
 
@@ -51,6 +60,17 @@ async function reload_note_list() {
     title.textContent = note.title;
     dateText.textContent = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
+    root.onclick = async () => {
+      const n = await db.getNoteById(note.id);
+      currentId = note.id;
+
+      input_title.value = n.title;
+      input_content.value = n.content;
+      button_delete.innerText = "Delete note";
+      button_save.innerText = "Update note";
+
+      panel2.classList.add("show");
+    };
     root.append(title, dateText, document.createElement("span"));
 
     return root;
